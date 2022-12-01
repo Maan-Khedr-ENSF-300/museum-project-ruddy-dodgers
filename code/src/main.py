@@ -4,15 +4,11 @@ import maskpass
 from sql_operations import *
 
 
-def menu():
-    return (input("\n1. Insert\n2. Delete\n3. Update\n4. Create Table\n5. Create View\n6. Alter\n7. Query\n0. Exit\nEnter your choice:"))
-
-
-def db_connector(username, password, database, host='127.0.0.1'):
+def db_connector(username, password):
 
     try:
         cnx = mysql.connector.connect(
-            user=username, password=password, host=host, database=database)
+            user=username, password=password, host='127.0.0.1', database='MUSEUMART')
         print("Connection Successful")
 
         return cnx
@@ -27,7 +23,6 @@ def db_connector(username, password, database, host='127.0.0.1'):
 
 
 def main():
-
     print("Welcome to the MySQL Database Manager.")
     print("In order to proceed please select your role from the list below:\n1-DB Admin\n2-Data Entry\n3-Browse as guest")
     selection = input("please type 1, 2, or 3 to select your role:")
@@ -52,48 +47,10 @@ def main():
             print("Connection Unsuccessful. Please try again.")
             print(e)
 
-    condition = True
-    while (condition):
-        choice = menu()
-
-        if choice == '1':
-            # insert(cursor)
-            cnx.commit()
-
-        elif choice == '2':
-            # delete(cursor)
-            cnx.commit()
-
-        elif choice == '3':
-            # update(cursor)
-            cnx.commit()
-
-        elif choice == '4':
-            # create_table(cursor)
-            cnx.commit()
-
-        elif choice == '5':
-            # create_view(cursor)
-            cnx.commit()
-
-        elif choice == '6':
-            # alter(cursor)
-            cnx.commit()
-
-        elif choice == '7':
-            # query(cursor)
-            cnx.commit()
-
-        elif choice == '0':
-            print("Thank you. Exited Successfully.")
-            cnx.commit()
-            cursor.close()
-            cnx.close()
-            condition = False
-            exit(1)
-
-        else:
-            print("Invalid choice. Please try again.")
+    print("Thank you. Exited Successfully.")
+    cnx.commit()
+    cursor.close()
+    cnx.close()
 
 
 if __name__ == '__main__':

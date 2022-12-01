@@ -10,3 +10,11 @@ def init_database(cursor):
                 cursor.execute(command)
         except Exception as e:
             print("Command skipped: ", e)
+
+
+def add_user():
+    pass
+
+
+def edit_user():
+    pass
