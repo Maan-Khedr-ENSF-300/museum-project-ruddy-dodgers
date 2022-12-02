@@ -1,7 +1,9 @@
 import mysql.connector
 from mysql.connector import errorcode
 import maskpass
-from sql_operations import *
+from end_user import *
+from admin import *
+from data_entry import *
 
 
 def db_connector(username, password):
@@ -19,33 +21,40 @@ def db_connector(username, password):
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
             print("Database does not exist")
         else:
+            print("Connection Unsuccessful. Please try again.")
             print(err)
 
 
 def main():
     print("Welcome to the MySQL Database Manager.")
     print("In order to proceed please select your role from the list below:\n1-DB Admin\n2-Data Entry\n3-Browse as guest")
-    selection = input("please type 1, 2, or 3 to select your role:")
 
-    if selection in ['1', '2']:
-        username = input("Username:")
-        password = maskpass.askpass("Please Enter Password: ", mask='*')
-    else:
-        username = "guest"
-        password = None
+    valid = False
+    while not valid:
+        selection = input("please type 1, 2, or 3 to select your role:")
+        if selection in ['1', '2']:
+            username = input("Username:")
+            password = maskpass.askpass("Please Enter Password: ", mask='*')
+        elif selection == '3':
+            username = "guest"
+            password = None
+        else:
+            print("Invalid Selection - Please try again")
 
-    connection_unsuccessful = True
-    while connection_unsuccessful:
         try:
-            database = input("Database: ")
-            host = input("Host: ")
-
-            cnx = db_connector(username, password, database, host)
+            cnx = db_connector(username, password)
             cursor = cnx.cursor()
-            connection_unsuccessful = False
-        except Exception as e:
-            print("Connection Unsuccessful. Please try again.")
-            print(e)
+            valid = True
+
+        except Exception:
+            pass
+
+    if selection == '1':
+        admin_main_menu(cnx, cursor)
+    elif selection == '2':
+        entry_main_menu(cnx, cursor)
+    elif selection == '3':
+        browsing_main_menu(cursor)
 
     print("Thank you. Exited Successfully.")
     cnx.commit()
