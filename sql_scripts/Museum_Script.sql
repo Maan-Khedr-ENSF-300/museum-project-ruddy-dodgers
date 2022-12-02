@@ -13,7 +13,8 @@ CREATE TABLE ART_OBJECT (
 	primary key (Unique_ID)
 );
 
-INSERT INTO ART_OBJECT (Unique_ID, Style, Title, Year_C, AODescription)
+
+INSERT INTO ART_OBJECT (Unique_ID, Style, Title, Year_C)
 VALUES
 (001, "Renaissance", "Angel Bearing Candlestick", "1524-29"),
 (002, "Late Medieval", "Field Armor of King Henry VIII", "1509-47"),
@@ -23,7 +24,6 @@ VALUES
 (006, "Late Medieval", "Tankard", "1575");
 
 
-
 DROP TABLE IF EXISTS PAINTING;
 CREATE TABLE PAINTING (
 	Unique_ID		int not null,
@@ -31,6 +31,7 @@ CREATE TABLE PAINTING (
 	primary key (Unique_ID),
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
 );
+
 
 DROP TABLE IF EXISTS SCULPTURE_STATUE;
 CREATE TABLE SCULPTURE_STATUE (
@@ -73,25 +74,24 @@ CREATE TABLE BORROWED (
 DROP TABLE IF EXISTS ARTIST;
 CREATE TABLE ARTIST (
 	Unique_ID			int not null,
-    AName				varchar(30),
+    Aname				varchar(30),
     Date_Born			varchar(30),
     Date_Died			varchar(30),
     Main_Style			varchar(30),
     Epoch				varchar(30),
     Origin_Country		varchar(30),
     ADescription		varchar(30),
-	primary key (Name),
+	primary key (Aname),
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
 );
 
-INSERT INTO ARTIST (Unique_ID, Name, Date_Born, Date_Died, Main_Style, Epoch, Origin_Country, ADescription)
+INSERT INTO ARTIST (Unique_ID, Aname, Date_Born, Date_Died)
 VALUES
 (001, "Benedetto da Rovezzano", "1474", "1554"),
-(002),
-(003, "Unknown Netherlandish Painter"),
+(002, "Unknown", NULL, NULL),
+(003, "Unknown Netherlandish Painter", NULL, NULL),
 (004, "Late Medieval", "Henry VII", "1505"),
-(005, "Affabel Partridge", "1551", "1580"),
-(006, "Affabel Partridge");
+(005, "Affabel Partridge", "1551", "1580");
 
 DROP TABLE IF EXISTS COLLECTIONS;
 CREATE TABLE COLLECTIONS (
@@ -125,7 +125,7 @@ CREATE TABLE EXHIBITIONS (
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
 );
 
-DROP ROLE IF EXISTS db_admin@localhost, read_access@localhost;
+DROP ROLE IF EXISTS db_admin@localhost, data_access@localhost, read_access@localhost;
 CREATE ROLE db_admin@localhost, data_access@localhost, read_access@localhost;
 GRANT ALL PRIVILEGES ON MUSEUMART.* TO db_admin@localhost;
 GRANT Insert ON MUSEUMART.* TO data_access@localhost;
