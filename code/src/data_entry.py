@@ -1,4 +1,3 @@
-import pandas as pd
 from helper_functions import *
 
 
@@ -94,14 +93,20 @@ def get_file_data(table_name, cursor):
         try:
             file = open(file_name, 'r')
             lines = [i.strip().split(' ') for i in file.readlines()]
-            df = pd.DataFrame(lines)
             cursor.execute(f"SELECT * FROM {table_name}")
             rows = cursor.fetchall()
-            df.columns = cursor.column_names
+            attributes = cursor.column_names
 
             file.close()
             valid = True
-            return df
 
         except Exception as e:
             print("Error Opening File: ", e)
+
+#         atr_str = ' , '.join(attributes)
+#         value_str = ' , '.join(['%s' for i in range(len(df.columns))])
+
+#         cursor.execute(f"""
+#         INSERT INTO {table_name} ({atr_str})
+#         VALUES
+# (001, "Benedetto da Rovezzano", "1474", "1554"),""")

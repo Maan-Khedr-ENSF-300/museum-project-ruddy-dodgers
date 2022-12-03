@@ -14,12 +14,10 @@
 
 - Maskpass
 - Tabulate
-- Pandas
 
 ```
 pip install maskpass
 pip install tabulate
-pip install pandas
 ```
 
 ### Usage
