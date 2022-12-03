@@ -5,7 +5,7 @@ def admin_main_menu(cnx, cursor):
     chosen = False
     while not chosen:
         choice = input(
-            "What would you like to do:\n1. Query\n2. Run SQL Script File\n3. Modify Database\n4. Edit Users\n0. Quit\n9. Log Out")
+            "\nWhat would you like to do:\n1. Query\n2. Run SQL Script File\n3. Modify Database\n4. Edit Users\n0. Quit\n9. Log Out")
 
         if choice == '1':
             query(cursor)
@@ -35,7 +35,7 @@ def admin_main_menu(cnx, cursor):
 
 
 def init_database(cursor):
-
+    i = 0
     working = False
     while not working:
         file_name = input("Enter the path to the file: ")
@@ -55,6 +55,9 @@ def init_database(cursor):
                 cursor.execute(command)
         except Exception as e:
             print("Command skipped: ", e)
+            i += 1
+
+    print(f"Executed with {i} errors.")
 
 
 def modify_user(cursor):
@@ -77,7 +80,7 @@ def query(cursor):
 
         query = input("Enter the query: \n")
         cursor.execute(query)
-        # print_table(cursor)
+        print_table(cursor)
         # DO WE HAVE TO PRINT THE TABLE?
 
     except Exception as e:
