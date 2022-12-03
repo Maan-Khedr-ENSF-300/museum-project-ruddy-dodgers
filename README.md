@@ -8,6 +8,47 @@
 - modify this file to include any notes on how to use and run the program
 - include any features you have added beyond the minimum requirements in a features list
 
+## Installation
+
+### Requires
+
+- Maskpass
+- Tabulate
+- Pandas
+
+```
+pip install maskpass
+pip install tabulate
+pip install pandas
+```
+
+### Usage
+
+1. Initialize the 'Museum_Script.SQL' file on your local server in MySQL found in the 'sql_scripts' folder of the repo
+
+2. Use the MySQL VSCODE Extension to set up a connection which will allow the python code to connect to the database (or some other means of having the local computer connected to the database)
+
+3. Run 'main.py' found in the code/src file
+
+## Task Assignment
+
+### Aarsh (UCID: 30150079)
+
+- EER Diagram
+- Main Python Application
+  - Main Software Design (main.py)
+  - Files and Functionality for Each User (admin, data_entry, end_user)
+  - Helper Functions that assist user functions
+
+### Nicola
+
+- Relational Schema
+- Created Database (Museum_Script)
+  - Different Users
+  - All Tables (Including referential Keys)
+
+### Tavish
+
 ## Organization:
 
 - code folder: contains your main python application code

@@ -6,7 +6,7 @@ def browsing_main_menu(cursor):
     chosen = False
     while not chosen:
         choice = input(
-            "What would you like to browse:\n1. Art Pieces\n2.Exhibitions\n3.Artists\n4.Collections\n0.Quit")
+            "What would you like to browse:\n1. Art Pieces\n2. Exhibitions\n3. Artists\n4. Collections\n0. Quit\n9. Logout")
 
         if choice == '1':
             art_menu()
@@ -22,9 +22,13 @@ def browsing_main_menu(cursor):
 
         elif choice == '0':
             chosen = True
-            print("Thank you. Exited Successfully.")
-            exit(1)
-            
+            return False
+
+        elif choice == '9':
+            chosen = True
+            print('Logging Out!')
+            return True
+
         else:
             print("Invalid Input. Please try again.")
 

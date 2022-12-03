@@ -26,35 +26,43 @@ def db_connector(username, password):
 
 
 def main():
-    print("Welcome to the MySQL Database Manager.")
-    print("In order to proceed please select your role from the list below:\n1-DB Admin\n2-Data Entry\n3-Browse as guest")
 
-    valid = False
-    while not valid:
-        selection = input("please type 1, 2, or 3 to select your role:")
-        if selection in ['1', '2']:
-            username = input("Username:")
-            password = maskpass.askpass("Please Enter Password: ", mask='*')
+    cnx, cursor = None, None
+    loop = True
+    while loop:
+
+        if cnx or cursor:
+            cursor.close()
+            cnx.close()
+
+        valid = False
+        while not valid:
+            print("\nWelcome to the MySQL Database Manager.\nIn order to proceed please select your role from the list below:\n1-DB Admin\n2-Data Entry\n3-Browse as guest")
+            selection = input("please type 1, 2, or 3 to select your role:")
+            if selection in ['1', '2']:
+                username = input("Username:")
+                password = maskpass.askpass(
+                    "Please Enter Password: ", mask='*')
+            elif selection == '3':
+                username = "guest"
+                password = None
+            else:
+                print("Invalid Selection - Please try again")
+
+            try:
+                cnx = db_connector(username, password)
+                cursor = cnx.cursor()
+                valid = True
+
+            except Exception:
+                pass
+
+        if selection == '1':
+            loop = admin_main_menu(cnx, cursor)
+        elif selection == '2':
+            loop = entry_main_menu(cnx, cursor)
         elif selection == '3':
-            username = "guest"
-            password = None
-        else:
-            print("Invalid Selection - Please try again")
-
-        try:
-            cnx = db_connector(username, password)
-            cursor = cnx.cursor()
-            valid = True
-
-        except Exception:
-            pass
-
-    if selection == '1':
-        admin_main_menu(cnx, cursor)
-    elif selection == '2':
-        entry_main_menu(cnx, cursor)
-    elif selection == '3':
-        browsing_main_menu(cursor)
+            loop = browsing_main_menu(cursor)
 
     print("Thank you. Exited Successfully.")
     cnx.commit()

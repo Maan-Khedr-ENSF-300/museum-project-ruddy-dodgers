@@ -5,7 +5,7 @@ def admin_main_menu(cnx, cursor):
     chosen = False
     while not chosen:
         choice = input(
-            "What would you like to do:\n1. Query\n2. Run SQL Script File\n3. Modify Database\n4. Edit Users\n0.Quit")
+            "What would you like to do:\n1. Query\n2. Run SQL Script File\n3. Modify Database\n4. Edit Users\n0. Quit\n9. Log Out")
 
         if choice == '1':
             query(cursor)
@@ -23,8 +23,12 @@ def admin_main_menu(cnx, cursor):
 
         elif choice == '0':
             chosen = True
-            print("Thank you. Exited Successfully.")
-            exit(1)
+            return False
+
+        elif choice == '9':
+            chosen = True
+            print('Logging Out!')
+            return True
 
         else:
             print("Invalid Input. Please try again.")
