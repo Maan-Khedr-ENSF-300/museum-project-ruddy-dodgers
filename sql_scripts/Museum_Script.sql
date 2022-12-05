@@ -32,6 +32,10 @@ CREATE TABLE PAINTING (
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
 );
 
+Insert into PAINTING (Unique_ID,Paint_type)
+VALUES
+(004, "Oil");
+
 
 DROP TABLE IF EXISTS SCULPTURE_STATUE;
 CREATE TABLE SCULPTURE_STATUE (
@@ -43,6 +47,11 @@ CREATE TABLE SCULPTURE_STATUE (
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
 );
 
+INSERT INTO SCULPTURE_STATUE(Unique_ID,Weight,Height,Material)
+VALUES
+(001, "141 kg","101 cm","Bronze"),
+(002, "22.91 kg","184.2 cm","Steel");
+
 DROP TABLE IF EXISTS OTHER;
 CREATE TABLE OTHER (
 	Unique_ID		int not null,
@@ -51,6 +60,11 @@ CREATE TABLE OTHER (
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
 );
 
+
+INSERT INTO OTHER (Unique_ID, OType)
+VALUES
+(005,"Silver"),
+(006,"Metalwork");
 DROP TABLE IF EXISTS PERMANENT_COLLECTION;
 CREATE TABLE PERMANENT_COLLECTION (
 	Unique_ID				int not null,
@@ -61,6 +75,9 @@ CREATE TABLE PERMANENT_COLLECTION (
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
 );
 
+
+
+
 DROP TABLE IF EXISTS BORROWED;
 CREATE TABLE BORROWED (
 	Unique_ID		int not null,
@@ -70,6 +87,8 @@ CREATE TABLE BORROWED (
 	primary key (Unique_ID),
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
 );
+
+
 
 DROP TABLE IF EXISTS ARTIST;
 CREATE TABLE ARTIST (
