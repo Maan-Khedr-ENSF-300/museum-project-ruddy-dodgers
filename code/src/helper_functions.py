@@ -10,7 +10,6 @@ def print_table(cursor):
 
     rows = cursor.fetchall()
 
-    print("\nQuery Executed Successfully!")
     print("Table Looks like: ")
     print(tabulate(rows, headers=cursor.column_names, tablefmt="grid"))
 

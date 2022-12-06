@@ -5,7 +5,8 @@ def admin_main_menu(cnx, cursor):
     chosen = False
     while not chosen:
         choice = input(
-            "\nWhat would you like to do:\n1. Query\n2. Run SQL Script File\n3. Modify Database\n4. Edit Users\n0. Quit\n9. Log Out\n")
+
+            "\nWhat would you like to do:\n1. Query\n2. Run SQL Script File\n3. Edit Users\n0. Quit\n9. Log Out\n")
 
         if choice == '1':
             query(cursor)
@@ -14,14 +15,11 @@ def admin_main_menu(cnx, cursor):
         elif choice == '2':
             init_database(cursor)
             cnx.commit()
-
+        
 
         elif choice == '3':
-            modify_database(cursor)
-            cnx.commit()
-
-        elif choice == '4':
             modify_user(cnx, cursor)
+
 
         elif choice == '0':
             chosen = True
@@ -40,7 +38,10 @@ def init_database(cursor):
     i = 0
     working = False
     while not working:
-        file_name = input("Enter the path to the file: ")
+        file_name = input(
+            "Enter the path to the file (enter q to exit menu): ")
+        if file_name == 'q':
+            return
 
         try:
             with open(file_name, 'r') as fd:
@@ -115,13 +116,6 @@ def modify_user(cnx, cursor):
                 cursor.execute(f"DROP USER {user}@localhost")
                 cnx.commit()
             chosen = True
-
-
-
-
-def modify_database(cursor):
-    pass
-
 
 def query(cursor):
     """Goes through and asks for user inputs to 
