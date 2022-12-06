@@ -8,19 +8,15 @@ def entry_main_menu(cnx, cursor):
             "What would you like to do:\n1. Look Up Info\n2. Insert New Data\n3. Update/Delete Tuples\n0. Quit\n9. Logout\n")
         if choice == '1':
             data_lookup(cursor)
-        
+
         elif choice == '2':
-        
+
             table_name = choose_table(cursor)
-            while True:
-                choice2 = input("Would you like to insert data manually or from a file? (M/F): ").upper()
-            table_name = chose_table(cursor)
 
             if not table_name:
                 continue
 
-            chosen2 = False
-            while not chosen2:
+            while True:
                 choice2 = input(
                     "Would you like to insert data manually or from a file? (M/F): ")
 
@@ -59,27 +55,6 @@ def entry_main_menu(cnx, cursor):
             continue
 
 
-def chose_table(cursor):
-    c_table = False
-    while not c_table:
-        cursor.execute("SHOW TABLES;")
-        print_table(cursor)
-
-        table = input(
-            "What table would you like to insert data into (q to quit): ")
-
-        if table == 'q':
-            c_table = True
-            return
-
-        cursor.execute("SHOW TABLES;")
-        rows = cursor.fetchall()
-
-        for row in rows:
-            if table in row:
-                c_table = True
-                return table
-
 def data_lookup(cursor):
     """Allows User to view data inside tables
     Args: 
@@ -103,11 +78,12 @@ def change_data(table, cursor):
     Returns:
         None
     """
-    #get and display table data
+    # get and display table data
     print_table(cursor)
     num_attributes = len(cursor.description)
     attribute_list = [i[0] for i in cursor.description]
-    uid = input("Please enter the 3 digit ID of the item you would like to update in the database:\n")
+    uid = input(
+        "Please enter the 3 digit ID of the item you would like to update in the database:\n")
     attribute = input("Which column would you like to update:\n")
     data = input("Enter your new value:\n")
     update_command = f"UPDATE {table} SET {attribute} = '{data}' WHERE Unique_ID = {uid}"
@@ -130,27 +106,30 @@ def insert_manually(table, cursor):
     Returns:
         None
     """
-    
+
     print_table(cursor)
 
     num_attributes = len(cursor.description)
     attribute_list = [i[0] for i in cursor.description]
     insert_command = f"INSERT INTO {table} ("
-    uid = input("Please enter the 3 digit ID of the item you would like to enter into the database:\n")
-    #adds all columns to insert statement
-    for i in range(0, num_attributes-1):
+    uid = input(
+        "Please enter the 3 digit ID of the item you would like to enter into the database:\n")
+    # adds all columns to insert statement
+    for i in range(num_attributes-1):
         insert_command += f"{attribute_list[i]}, "
     insert_command += f"{attribute_list[num_attributes-1]})"
     insert_command += f" VALUES ({uid}, "
-    
-    #adds each data entry to insert statement
+
+    # adds each data entry to insert statement
     for i in range(1, num_attributes-1):
-        data = input(f"Enter the info you would like to enter into the '{attribute_list[i]}' column:\n")
+        data = input(
+            f"Enter the info you would like to enter into the '{attribute_list[i]}' column:\n")
         insert_command += f"'{data}', "
-    data = input(f"Enter the info you would like to enter into the '{attribute_list[num_attributes-1]}' column:\n")
+    data = input(
+        f"Enter the info you would like to enter into the '{attribute_list[num_attributes-1]}' column:\n")
     insert_command += f"'{data}')"
 
-    #Try to execute statement, print error message if fails
+    # Try to execute statement, print error message if fails
     print(f"Attempting to execute command:\n {insert_command}")
     try:
         cursor.execute(insert_command)
@@ -158,9 +137,6 @@ def insert_manually(table, cursor):
     except Exception as e:
         print("Error With Data")
         print(e)
-
-    
-    
 
 
 def get_file_data(table_name, cursor):
