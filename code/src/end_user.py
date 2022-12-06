@@ -3,13 +3,12 @@ from helper_functions import *
 
 def browsing_main_menu(cursor):
 
-    chosen = False
-    while not chosen:
+    while True:
         choice = input(
             "What would you like to browse:\n1. Art Pieces\n2. Exhibitions\n3. Artists\n4. Collections\n0. Quit\n9. Logout\n")
 
         if choice == '1':
-            art_menu()
+            art_menu(cursor)
 
         elif choice == '2':
             exhibition_menu(cursor)
@@ -21,11 +20,10 @@ def browsing_main_menu(cursor):
             collection_menu(cursor)
 
         elif choice == '0':
-            chosen = True
-            return False
+            print("Exiting Program...")
+            exit(1)
 
         elif choice == '9':
-            chosen = True
             print('Logging Out!')
             return True
 
@@ -34,8 +32,24 @@ def browsing_main_menu(cursor):
 
 
 def exhibition_menu(cursor):
-    pass
+    iteration = 0
+    browsing = True
+    while browsing:
+        if iteration != 0:
+            browsing = continue_browsing()
+            if not browsing:
+                break
+        try:
+            cursor.execute("SELECT Ename FROM EXHIBITIONS")
+            print_table(cursor)
+            exhibition_name = input("Please Enter the name of the exhibition you would like to view")
+            cursor.execute(f"SELECT * FROM EXHIBITIONS WHERE Ename = '{exhibition_name}'")
 
+        except Exception as e:
+            print("Error Displaying Exhibitions")
+            print(e)
+
+        iteration += 1
 
 def artist_menu(cursor):
     iteration = 0
@@ -43,15 +57,15 @@ def artist_menu(cursor):
     while browsing:
         if iteration != 0:
             browsing = continue_browsing()
+            if not browsing:
+                break
 
         try:
-            cursor.execute("SELECT NAME FROM ARTIST")
+            cursor.execute("SELECT Aname FROM ARTIST")
             print_table(cursor)
-            collection_name = input(
-                "Please enter the name of the Artist you would like to browse: ")
+            collection_name = input("Please enter the name of the Artist you would like to browse: ")
 
-            cursor.execute(
-                f"SELECT * FROM ARTIST WHERE NAME = '{collection_name}'")
+            cursor.execute(f"SELECT * FROM ARTIST WHERE Aname = '{collection_name}'")
             print_table(cursor)
 
         except Exception as e:
@@ -69,15 +83,16 @@ def collection_menu(cursor):
     while browsing:
         if iteration != 0:
             browsing = continue_browsing()
-
+            if not browsing:
+                break
         try:
-            cursor.execute("SELECT NAME FROM COLLECTION")
+            cursor.execute("SELECT Cname FROM COLLECTIONs")
             print_table(cursor)
             collection_name = input(
                 "Please enter the name of the collection you would like to browse: ")
 
             cursor.execute(
-                f"SELECT * FROM COLLECTION WHERE NAME = '{collection_name}'")
+                f"SELECT * FROM COLLECTIONs WHERE Cname = '{collection_name}'")
             print_table(cursor)
 
         except Exception as e:
@@ -96,6 +111,8 @@ def art_menu(cursor):
     while browsing:
         if iteration != 0:
             browsing = continue_browsing()
+            if not browsing:
+                break
 
         try:
             choice = input(
@@ -127,7 +144,6 @@ def art_menu(cursor):
             print(e)
 
         iteration += 1
-
 
 def continue_browsing():
 
