@@ -38,7 +38,7 @@ CREATE TABLE PAINTING (
 	Unique_ID		varchar(3) not null,
     Paint_type		varchar(30) not null,
 	primary key (Unique_ID),
-    foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
+    foreign key (Unique_ID) references ART_OBJECT(Unique_ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 Insert into PAINTING (Unique_ID,Paint_type)
@@ -52,11 +52,11 @@ VALUES
 DROP TABLE IF EXISTS SCULPTURE_STATUE;
 CREATE TABLE SCULPTURE_STATUE (
 	Unique_ID		varchar(3) not null,
-    Weight			varchar(30) not null,
-    Height			varchar(30) not null,
-    Material		varchar(30) not null,
+    Weight			varchar(30) ,
+    Height			varchar(30) ,
+    Material		varchar(30) ,
 	primary key (Unique_ID),
-    foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
+    foreign key (Unique_ID) references ART_OBJECT(Unique_ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO SCULPTURE_STATUE(Unique_ID,Weight,Height,Material)
@@ -71,7 +71,7 @@ CREATE TABLE OTHER (
 	Unique_ID		varchar(3) not null,
     OType			varchar(30) not null,
 	primary key (Unique_ID),
-    foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
+    foreign key (Unique_ID) references ART_OBJECT(Unique_ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -89,7 +89,7 @@ CREATE TABLE PERMANENT_COLLECTION (
     Collection_Status		varchar(30),
     Cost					varchar(30),
 	primary key (Unique_ID),
-    foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
+    foreign key (Unique_ID) references ART_OBJECT(Unique_ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO PERMANENT_COLLECTION(Unique_ID,Date_acquired,Collection_Status,Cost)
@@ -109,7 +109,7 @@ CREATE TABLE BORROWED (
     Date_borrowed			varchar(30) ,
     Date_returned			varchar(30) ,
 	primary key (Unique_ID),
-    foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
+    foreign key (Unique_ID) references ART_OBJECT(Unique_ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO BORROWED(Unique_ID,Borrowed_from,Date_borrowed,Date_returned)
@@ -171,7 +171,7 @@ CREATE TABLE BACKGROUND (
     Origin				varchar(30),
     Attribute			varchar(30),
 	primary key (Unique_ID),
-    foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
+    foreign key (Unique_ID) references ART_OBJECT(Unique_ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO BACKGROUND(Unique_ID,Origin,Attribute)
@@ -199,8 +199,8 @@ CREATE TABLE EXHIBITIONS (
 
 
 ALTER TABLE ART_OBJECT
-ADD foreign key(artist_name) references ARTIST(Aname),
-ADD foreign key(in_collection) references COLLECTIONS(Cname);
+ADD foreign key(artist_name) references ARTIST(Aname) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD foreign key(in_collection) references COLLECTIONS(Cname) ON DELETE CASCADE ON UPDATE CASCADE;
 
 DROP TABLE IF EXISTS EXHIBITS;
 CREATE TABLE EXHIBITS (

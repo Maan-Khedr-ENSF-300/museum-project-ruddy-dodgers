@@ -1,7 +1,9 @@
 -- 1) Show all tables and explain how they are related to one another (keys, triggers, etc.)
 SELECT *
 FROM
-    information_schema.MUSEUMART;
+    information_schema.tables
+WHERE
+    table_schema = 'MUSEUMART';
 
 
 -- 2) A basic retrieval query
@@ -25,9 +27,8 @@ where AO.artist_name in (select A.Aname
                     from artist as A
                     where A.Date_Born > 1700);
 
-5) A retrieval query using joined tables
-=======
 -- 5) A retrieval query using joined tables
+
 
 -- Find all art made by artists whose main style is jewelry using a join table
 
@@ -38,4 +39,26 @@ WHERE main_style = "jewelry";
 -- 6) An update operation with any necessary triggers
 
 
+DROP TRIGGER IF EXISTS ARTIST_TRIGGER;
+
+CREATE TRIGGER ARTIST_TRIGGER
+AFTER UPDATE ON ART_OBJECT 
+FOR EACH ROW
+   UPDATE ARTIST
+   SET ADescription = NEW.artist_name;
+
+
+UPDATE ART_OBJECT
+SET artist_name = 'TEST NAME'
+WHERE UNIQUE_ID = '001';
+
+
 -- 7) A deletion operation with any necessary triggers
+
+DROP TRIGGER IF EXISTS ARTIST_D_TRIGGER;
+
+CREATE TRIGGER ARTIST_TRIGGER
+AFTER UPDATE ON ART_OBJECT 
+FOR EACH ROW
+   UPDATE ARTIST
+   SET ADescription = NEW.artist_name;
