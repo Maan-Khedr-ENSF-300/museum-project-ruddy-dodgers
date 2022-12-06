@@ -85,9 +85,9 @@ VALUES
 DROP TABLE IF EXISTS PERMANENT_COLLECTION;
 CREATE TABLE PERMANENT_COLLECTION (
 	Unique_ID				varchar(3) not null,
-    Date_acquired			varchar(30) not null,
-    Collection_Status		varchar(30) not null,
-    Cost					varchar(30) not null,
+    Date_acquired			varchar(30) ,
+    Collection_Status		varchar(30),
+    Cost					varchar(30),
 	primary key (Unique_ID),
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
 );
@@ -105,9 +105,9 @@ VALUES
 DROP TABLE IF EXISTS BORROWED;
 CREATE TABLE BORROWED (
 	Unique_ID		varchar(3) not null,
-    Borrowed_from			varchar(30) not null,
-    Date_borrowed			varchar(30) not null,
-    Date_returned			varchar(30) not null,
+    Borrowed_from			varchar(30) ,
+    Date_borrowed			varchar(30) ,
+    Date_returned			varchar(30) ,
 	primary key (Unique_ID),
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
 );
@@ -151,9 +151,9 @@ VALUES
 DROP TABLE IF EXISTS COLLECTIONS;
 CREATE TABLE COLLECTIONS (
     Cname				varchar(30) not null,
-    Contact_Person		varchar(30) not null,
-    Phone				varchar(30) not null,
-    Address				varchar(30) not null,
+    Contact_Person		varchar(30) ,
+    Phone				varchar(30) ,
+    Address				varchar(30) ,
     CType				varchar(30),
     CDescription		varchar(300),
 	primary key (Cname)
@@ -168,8 +168,8 @@ VALUES
 DROP TABLE IF EXISTS BACKGROUND;
 CREATE TABLE BACKGROUND (
 	Unique_ID		    varchar(3) not null,
-    Origin				varchar(30) not null,
-    Attribute			varchar(30) not null,
+    Origin				varchar(30),
+    Attribute			varchar(30),
 	primary key (Unique_ID),
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
 );
@@ -192,14 +192,24 @@ VALUES
 DROP TABLE IF EXISTS EXHIBITIONS;
 CREATE TABLE EXHIBITIONS (
     Ename				varchar(30) not null,
-    Start_date			varchar(30) not null,
-    End_date			varchar(30) not null,
-	primary key (Ename))
+    Start_date			varchar(30),
+    End_date			varchar(30),
+	primary key (Ename)
+);
 
 
 ALTER TABLE ART_OBJECT
 ADD foreign key(artist_name) references ARTIST(Aname),
 ADD foreign key(in_collection) references COLLECTIONS(Cname);
+
+DROP TABLE IF EXISTS EXHIBITS;
+CREATE TABLE EXHIBITS (
+	Unique_ID		varchar(3) not null,
+    Ename			varchar(30) not null,
+    PRIMARY key (UNIQUE_ID, Ename),
+    foreign key (Unique_ID) references ART_OBJECT(Unique_ID),
+    foreign key (Ename) references EXHIBITIONS(Ename)
+    );
 
 
 

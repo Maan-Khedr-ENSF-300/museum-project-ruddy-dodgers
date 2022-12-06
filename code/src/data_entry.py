@@ -165,8 +165,7 @@ def get_file_data(table_name, cursor):
 
             for line in lines:
                 for attribute in line:
-                    if isinstance(attribute, str):
-                        attribute = f"'{attribute}'"
+                    attribute = f"'{attribute}'"
 
             cursor.execute(f"SELECT * FROM {table_name}")
             rows = cursor.fetchall()
@@ -179,17 +178,12 @@ def get_file_data(table_name, cursor):
             value_str1 = ', '.join(list(range(len(lines[0]))))
             value_str2 = ', '.join([f'({i})' for i in range(len(lines))])
 
-            print(f"""
+            cursor.execute(f"""
             INSERT INTO {table_name} ({atr_str})
             VALUES
             {value_str2};
-    """)
-#         cursor.execute(f"""
-#         INSERT INTO {table_name} ({atr_str})
-#         VALUES
-#         {value_str2};
 
-# """)
+    """)
 
         except Exception as e:
             print("Error Opening File: ", e)
