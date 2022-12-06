@@ -46,6 +46,11 @@ pip install tabulate
   - All Tables (Including referential Keys)
 
 ### Tavish
+-Worked on Database(Museum_Script)
+  -Filled it with values from the met website
+  -Edited and put finishing touches on
+-Answered Questions in Query Code (Query_Code)
+  -Questions 1-5
 
 ## Organization:
 
