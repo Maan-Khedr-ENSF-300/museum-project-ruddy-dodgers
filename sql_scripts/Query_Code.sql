@@ -18,8 +18,20 @@ ORDER BY DAte_Died desc;
 
 -- 4) A nested retrieval query
 
+
+select *
+from ART_OBJECT as AO
+where AO.artist in (select A.Aname
+                    from artist as A
+                    where A.Date_Born > 1700);
+5) A retrieval query using joined tables
+=======
 -- 5) A retrieval query using joined tables
 
+
+select *
+FROM (artist join ART_OBJECT on artist_name = aname)
+WHERE Epoch = "Renaissance";
 
 -- 6) An update operation with any necessary triggers
 
