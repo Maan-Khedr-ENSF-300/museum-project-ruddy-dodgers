@@ -191,7 +191,7 @@ VALUES
 
 DROP TABLE IF EXISTS EXHIBITIONS;
 CREATE TABLE EXHIBITIONS (
-    Ename				varchar(30) not null,
+    Ename				varchar(100) not null,
     Start_date			varchar(30),
     End_date			varchar(30),
 	primary key (Ename)
@@ -205,11 +205,48 @@ ADD foreign key(in_collection) references COLLECTIONS(Cname);
 DROP TABLE IF EXISTS EXHIBITS;
 CREATE TABLE EXHIBITS (
 	Unique_ID		varchar(3) not null,
-    Ename			varchar(30) not null,
+    Ename			varchar(100) not null,
     PRIMARY key (UNIQUE_ID, Ename),
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID),
     foreign key (Ename) references EXHIBITIONS(Ename)
     );
+
+
+INSERT INTO EXHIBITIONS(Ename,Start_date,End_date)
+VALUES
+("New York","October 10, 2022","January 8, 2023"),
+("Cleveland Museum of Art","February 26, 2023","May 14, 2023"),
+("Fine Arts Museums of San Francisco","June 24, 2023","September 24, 2023"),
+("Exhibition of the Royal House of Tudor","1890","1891"),
+("Loan Exhibition of Mediaeval and Renaissance Arms","1953","1954"),
+("California Palace of the Legion of Honor","1952","1953"),
+("Pittsburgh. Department of Fine Arts","1954","1955"),
+("Henry VIII: Dressed to Kill","2008","2009"),
+("Exposition Temporaire sous pyramide","March 14, 2008","June 6, 2008"),
+("Petite galerie 6","September 22, 2021","July 4, 2022"),
+("Histoire de la maison de Bourbon","May 5, 2021","September 13, 2021");
+
+
+INSERT INTO EXHIBITS(Unique_ID,Ename)
+VALUES
+("001","New York"),
+("001","Cleveland Museum of Art"),
+("001","Fine Arts Museums of San Francisco"),
+("002","Exhibition of the Royal House of Tudor"),
+("002","Loan Exhibition of Mediaeval and Renaissance Arms"),
+("002","California Palace of the Legion of Honor"),
+("002","Pittsburgh. Department of Fine Arts"),
+("002","Henry VIII: Dressed to Kill"),
+("002","New York"),
+("003","New York"),
+("004","New York"),
+("005","New York"),
+("006","New York"),
+("006","Cleveland Museum of Art"),
+("006","Fine Arts Museums of San Francisco"),
+("008","Exposition Temporaire sous pyramide"),
+("010","Petite galerie 6"),
+("012","Histoire de la maison de Bourbon");
 
 
 
