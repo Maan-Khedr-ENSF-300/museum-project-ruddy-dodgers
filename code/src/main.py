@@ -50,7 +50,8 @@ def main():
                 password = ''
             elif selection == '4':
                 username = input("Username:")
-                password = maskpass.askpass("Please Enter Password: ", mask='*')
+                password = maskpass.askpass(
+                    "Please Enter Password: ", mask='*')
             elif selection == '0':
                 print("Exiting Program...")
                 exit(1)
