@@ -18,18 +18,18 @@ CREATE TABLE ART_OBJECT (
 );
 
 
-INSERT INTO ART_OBJECT (Unique_ID, artist_name, Epoch, Title, Year_C,AODescription,in_collection)
+INSERT INTO ART_OBJECT (Unique_ID, Epoch,artist_name, Title, Year_C,AODescription,in_collection)
 VALUES
 ("001", "Renaissance","Benedetto da Rovezzano" ,"Angel Bearing Candlestick", "1527","Angel holding a candlestick.","The Met"),
-('002', "Late Medieval","Unknown" , "Field Armor of King Henry VIII", "1544","Armor made by Kind Henry VIII","The Met"),
-('003', "Late Medieval","Hans Holbein the Younger " , "Henry VIII", "1537","Portrait of Kings Henry VIII made in the mid 1500's.","The Met"),
+('002', "Late Medieval","Unknown", "Field Armor of King Henry VIII", "1544","Armor made by Kind Henry VIII","The Met"),
+('003', "Late Medieval","Hans Holbein the Younger" , "Henry VIII", "1537","Portrait of Kings Henry VIII made in the mid 1500's.","The Met"),
 ('004', "Late Medieval","Unknown Netherlandish Painter" , "Henry VII", "1505","Portrait of King Henry VII made in the early 1500's.","The Met"),
 ('005', "Late Medieval","Affabel Partridge" , "Ewer", "1562","Ewer made in mid 1500's attributed to a British Artist Affabel Partridge","The Met"),
 ('006', "Late Medieval", "Affabel Partridge" , "Tankard", "1575","Tankard made in mid 1500's attributed to a British Artist Affabel Partridge","The Met"),
 ('007',"Renaissance","Jacques-Louis David" ,"Les Sabines","1799","Painting of a battle during the fall of the Romain Empire","Masterpieces of the Louvre"),
 ('008',"Ancient","Unknown" ,"Stele","-1792","Massive slab of rock with an image carved into the top","Masterpieces of the Louvre"),
 ('009',"Renaissance","Joseph Cope" ,"Diamond named the Regent","1705","Diamond considered to be the most beautiful in the world.","Masterpieces of the Louvre"),
-('010',"Renaissance","Unkown" ,"The Holy Family","1770","Sculpture of the Holy Family","Acquisitions made in 2020"),
+('010',"Renaissance","Unknown" ,"The Holy Family","1770","Sculpture of the Holy Family","Acquisitions made in 2020"),
 ('011',"Renaissance","Jean-Valentin Morel" ,"Fossin Cup","1843","Fossin cup with lid included made in Paris","Acquisitions made in 2020"),
 ('012',"Renaissance","Jean-Honoré Fragonard" ,"Louis IX","1770","Drawing of Sain-Louis","Acquisitions made in 2020");
 
@@ -125,7 +125,7 @@ VALUES
 
 DROP TABLE IF EXISTS ARTIST;
 CREATE TABLE ARTIST (
-    Aname				varchar(30),
+    Aname				varchar(50) not null,
     Date_Born			varchar(30),
     Date_Died			varchar(30),
     Main_Style			varchar(30),
@@ -143,7 +143,7 @@ VALUES
 ( "Unknown Netherlandish Painter", NULL, NULL,NULL,NULL,NULL,NULL),
 ( "Affabel Partridge", "1551", "1580","England","Late Medieval","Goldsmith from London","Jewelry"),
 ( "Jacques-Louis David","1748","1825","France","Renaissance","French painter from Paris","Painting"),
-( "Joseph Cope",NULL,NULL,NULL,NULL,NULL,NULL),
+( "Joseph Cope",NULL,NULL,NULL,"Renaissance","Awesome Jeweler dude","Jewelry"),
 ("Jean-Valentin Morel","1794","1860","France","Renaissance","French silversmith","Jewelry"),
 ("Jean-Honoré Fragonard","1732","1802","France","Renaissance","French Paitner","Painting");
 
@@ -198,7 +198,7 @@ CREATE TABLE EXHIBITIONS (
 
 
 ALTER TABLE ART_OBJECT
-ADD foreign key(artist_name) references artist(Aname),
+ADD foreign key(artist_name) references ARTIST(Aname),
 ADD foreign key(in_collection) references COLLECTIONS(Cname);
 
 
