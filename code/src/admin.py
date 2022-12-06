@@ -5,21 +5,13 @@ def admin_main_menu(cnx, cursor):
     chosen = False
     while not chosen:
         choice = input(
-            "\nWhat would you like to do:\n1. Query\n2. Run SQL Script File\n3. Modify Database\n4. Edit Users\n0. Quit\n9. Log Out")
+            "\nWhat would you like to do:\n1. Query\n2. Run SQL Script File\n0. Quit\n9. Log Out\n")
 
         if choice == '1':
             query(cursor)
 
         elif choice == '2':
             init_database(cursor)
-
-        elif choice == '3':
-            modify_database(cursor)
-            cnx.commit()
-
-        elif choice == '4':
-            modify_user(cursor)
-            cnx.commit()
 
         elif choice == '0':
             chosen = True
@@ -38,7 +30,10 @@ def init_database(cursor):
     i = 0
     working = False
     while not working:
-        file_name = input("Enter the path to the file: ")
+        file_name = input(
+            "Enter the path to the file (enter q to exit menu): ")
+        if file_name == 'q':
+            return
 
         try:
             with open(file_name, 'r') as fd:
@@ -58,15 +53,6 @@ def init_database(cursor):
             i += 1
 
     print(f"Executed with {i} errors.")
-
-
-def modify_user(cursor):
-    # TODO ADD, EDIT, AND BLOCK USERS
-    pass
-
-
-def modify_database(cursor):
-    pass
 
 
 def query(cursor):
