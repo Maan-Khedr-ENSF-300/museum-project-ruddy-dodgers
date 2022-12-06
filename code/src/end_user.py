@@ -6,7 +6,7 @@ def browsing_main_menu(cursor):
     chosen = False
     while not chosen:
         choice = input(
-            "What would you like to browse:\n1. Art Pieces\n2. Exhibitions\n3. Artists\n4. Collections\n0. Quit\n9. Logout")
+            "What would you like to browse:\n1. Art Pieces\n2. Exhibitions\n3. Artists\n4. Collections\n0. Quit\n9. Logout\n")
 
         if choice == '1':
             art_menu()
@@ -99,7 +99,7 @@ def art_menu(cursor):
 
         try:
             choice = input(
-                "What type of Art Pieces would you like to browse:\n1. Paintings\n2.Sculptures/Statues\n3.Other\n0.Back")
+                "What type of Art Pieces would you like to browse:\n1. Paintings\n2.Sculptures/Statues\n3.Other\n0.Back\n")
 
             if choice == "1":
                 cursor.execute(

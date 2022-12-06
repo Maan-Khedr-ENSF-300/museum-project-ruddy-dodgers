@@ -199,6 +199,7 @@ CREATE TABLE EXHIBITIONS (
     foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
 );
 
+
 ALTER TABLE ART_OBJECT
 ADD foreign key(artist_name) references artist(Aname),
 ADD foreign key(in_collection) references COLLECTIONS(Cname);
@@ -224,4 +225,31 @@ GRANT read_access@localhost TO guest@localhost;
 SET DEFAULT ROLE ALL TO administrator@localhost;
 SET DEFAULT ROLE ALL TO data_entry_user@localhost;
 SET DEFAULT ROLE ALL TO guest@localhost;
+=======
+DROP ROLE IF EXISTS 'db_admin'@'localhost', 'write_access'@'localhost', 'read_access'@'localhost';
+CREATE ROLE 'db_admin'@'localhost', 'write_access'@'localhost', 'read_access'@'localhost';
+
+ GRANT ALL PRIVILEGES ON *.* TO 'db_admin'@'localhost' WITH GRANT OPTION;
+ GRANT Insert ON MUSEUMART.* TO 'write_access'@'localhost';
+ GRANT UPDATE ON MUSEUMART.* TO 'write_access'@'localhost';
+ GRANT Select ON MUSEUMART.* TO 'read_access'@'localhost';
+
+DROP USER IF EXISTS 'admin'@'localhost';
+DROP USER IF EXISTS 'data_entry'@'localhost';
+DROP USER IF EXISTS 'guest'@'localhost';
+
+CREATE USER 'admin'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+CREATE USER 'data_entry'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+CREATE USER 'guest'@'localhost';
+
+GRANT'db_admin'@'localhost' TO 'admin'@'localhost';
+
+GRANT 'write_access'@'localhost' TO 'data_entry'@'localhost';
+GRANT 'read_access'@'localhost' TO 'data_entry'@'localhost';
+
+GRANT 'read_access'@'localhost' TO 'guest'@'localhost';
+
+SET DEFAULT ROLE ALL TO 'admin'@'localhost';
+SET DEFAULT ROLE ALL TO 'data_entry'@'localhost';
+SET DEFAULT ROLE ALL TO 'guest'@'localhost';
 

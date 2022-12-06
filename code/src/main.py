@@ -7,7 +7,6 @@ from data_entry import *
 
 
 def db_connector(username, password):
-
     try:
         cnx = mysql.connector.connect(
             user=username, password=password, host='127.0.0.1', database='MUSEUMART')
@@ -37,15 +36,25 @@ def main():
 
         valid = False
         while not valid:
-            print("\nWelcome to the MySQL Database Manager.\nIn order to proceed please select your role from the list below:\n1-DB Admin\n2-Data Entry\n3-Browse as guest")
-            selection = input("please type 1, 2, or 3 to select your role:")
-            if selection in ['1', '2']:
+            print("\nWelcome to the MySQL Database Manager.\nIn order to proceed please select your role from the list below:\n1-DB Admin\n2-Data Entry\n3-Browse as guest\n4-Other User\n0-Quit")
+            selection = input("please type 1, 2, 3, or 4 to select your role:")
+            if selection == '1':
+                pass
+                username = 'admin'
+                password = 'password'
+            elif selection == '2':
+                username = "data_entry"
+                password = 'password'
+            elif selection == '3':
+                username = "guest"
+                password = ''
+            elif selection == '4':
                 username = input("Username:")
                 password = maskpass.askpass(
                     "Please Enter Password: ", mask='*')
-            elif selection == '3':
-                username = "guest"
-                password = None
+            elif selection == '0':
+                print("Exiting Program...")
+                exit(1)
             else:
                 print("Invalid Selection - Please try again")
 
