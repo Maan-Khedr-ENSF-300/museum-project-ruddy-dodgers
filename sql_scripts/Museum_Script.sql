@@ -191,41 +191,18 @@ VALUES
 
 DROP TABLE IF EXISTS EXHIBITIONS;
 CREATE TABLE EXHIBITIONS (
-	Unique_ID		    varchar(3) not null,
     Ename				varchar(30) not null,
     Start_date			varchar(30) not null,
     End_date			varchar(30) not null,
-	primary key (Unique_ID),
-    foreign key (Unique_ID) references ART_OBJECT(Unique_ID)
-);
+	primary key (Ename))
 
 
 ALTER TABLE ART_OBJECT
 ADD foreign key(artist_name) references artist(Aname),
 ADD foreign key(in_collection) references COLLECTIONS(Cname);
 
-DROP ROLE IF EXISTS db_admin@localhost, data_access@localhost, read_access@localhost;
-CREATE ROLE db_admin@localhost, data_access@localhost, read_access@localhost;
-GRANT ALL PRIVILEGES ON MUSEUMART.* TO db_admin@localhost;
-GRANT Insert ON MUSEUMART.* TO data_access@localhost;
-GRANT Select ON MUSEUMART.* TO read_access@localhost;
 
-DROP USER IF EXISTS administrator@localhost;
-DROP USER IF EXISTS data_entry_user@localhost;
-DROP USER IF EXISTS guest@localhost;
 
-CREATE USER administrator@localhost IDENTIFIED WITH mysql_native_password BY 'password';
-CREATE USER data_entry_user@localhost IDENTIFIED WITH mysql_native_password BY 'password';
-CREATE USER guest@localhost;
-
-GRANT db_admin@localhost TO administrator@localhost;
-GRANT data_access@localhost TO data_entry_user@localhost;
-GRANT read_access@localhost TO guest@localhost;
-
-SET DEFAULT ROLE ALL TO administrator@localhost;
-SET DEFAULT ROLE ALL TO data_entry_user@localhost;
-SET DEFAULT ROLE ALL TO guest@localhost;
-=======
 DROP ROLE IF EXISTS 'db_admin'@'localhost', 'write_access'@'localhost', 'read_access'@'localhost';
 CREATE ROLE 'db_admin'@'localhost', 'write_access'@'localhost', 'read_access'@'localhost';
 
