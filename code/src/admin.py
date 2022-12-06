@@ -63,7 +63,6 @@ def init_database(cursor):
 
 
 def modify_user(cnx, cursor):
-    # TODO ADD, EDIT, AND BLOCK USERS
     
     chosen = False
     while not chosen:
@@ -76,6 +75,7 @@ def modify_user(cnx, cursor):
             cnx.commit()
             cursor.execute(f"CREATE USER '{new_user}'@'localhost' IDENTIFIED BY 'password'")
             cnx.commit()
+            ##Adds role to 
             cursor.execute(f"GRANT '{user_level}'@'localhost' TO {new_user}@localhost;")
             cnx.commit()
             chosen = True

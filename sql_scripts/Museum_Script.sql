@@ -204,6 +204,7 @@ CREATE ROLE 'db_admin'@'localhost', 'write_access'@'localhost', 'read_access'@'l
 
  GRANT ALL PRIVILEGES ON *.* TO 'db_admin'@'localhost' WITH GRANT OPTION;
  GRANT Insert ON MUSEUMART.* TO 'write_access'@'localhost';
+ GRANT UPDATE ON MUSEUMART.* TO 'write_access'@'localhost';
  GRANT Select ON MUSEUMART.* TO 'read_access'@'localhost';
 
 DROP USER IF EXISTS 'admin'@'localhost';
@@ -215,7 +216,10 @@ CREATE USER 'data_entry'@'localhost' IDENTIFIED WITH mysql_native_password BY 'p
 CREATE USER 'guest'@'localhost';
 
 GRANT'db_admin'@'localhost' TO 'admin'@'localhost';
+
 GRANT 'write_access'@'localhost' TO 'data_entry'@'localhost';
+GRANT 'read_access'@'localhost' TO 'data_entry'@'localhost';
+
 GRANT 'read_access'@'localhost' TO 'guest'@'localhost';
 
 SET DEFAULT ROLE ALL TO 'admin'@'localhost';
