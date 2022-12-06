@@ -12,6 +12,10 @@ def entry_main_menu(cnx, cursor):
 
         elif choice == '2':
             table_name = chose_table(cursor)
+
+            if not table_name:
+                continue
+
             chosen2 = False
             while not chosen2:
                 choice2 = input(
@@ -33,6 +37,10 @@ def entry_main_menu(cnx, cursor):
 
         elif choice == '3':
             table_name = chose_table(cursor)
+
+            if not table_name:
+                continue
+
             change_data(table_name, cursor)
             cnx.commit()
 
@@ -56,7 +64,11 @@ def chose_table(cursor):
         print_table(cursor)
 
         table = input(
-            "What table would you like to insert data into: ")
+            "What table would you like to insert data into (q to quit): ")
+
+        if table == 'q':
+            c_table = True
+            return
 
         cursor.execute("SHOW TABLES;")
         rows = cursor.fetchall()
@@ -98,9 +110,15 @@ def get_file_data(table_name, cursor):
         try:
             file = open(file_name, 'r')
             lines = [i.strip().split(' ') for i in file.readlines()]
-            print(lines)
-            # for line in lines:
-            #     for attribute in line:
+
+            if not lines:
+                print("File is empty. Please try again.")
+                return
+
+            for line in lines:
+                for attribute in line:
+                    if isinstance(attribute, str):
+                        attribute = f"'{attribute}'"
 
             cursor.execute(f"SELECT * FROM {table_name}")
             rows = cursor.fetchall()
@@ -109,15 +127,21 @@ def get_file_data(table_name, cursor):
             file.close()
             valid = True
 
-        except Exception as e:
-            print("Error Opening File: ", e)
+            atr_str = ', '.join(attributes)
+            value_str1 = ', '.join(list(range(len(lines[0]))))
+            value_str2 = ', '.join([f'({i})' for i in range(len(lines))])
 
-        # atr_str = ' , '.join(attributes)
-        # value_str = ' , '.join(['%s' for i in range(len(df.columns))])
-
+            print(f"""
+            INSERT INTO {table_name} ({atr_str})
+            VALUES
+            {value_str2};
+    """)
 #         cursor.execute(f"""
 #         INSERT INTO {table_name} ({atr_str})
 #         VALUES
-#         (001, "Benedetto da Rovezzano", "1474", "1554"),
+#         {value_str2};
 
 # """)
+
+        except Exception as e:
+            print("Error Opening File: ", e)
