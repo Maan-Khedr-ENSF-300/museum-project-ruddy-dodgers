@@ -13,14 +13,15 @@ def print_table(cursor):
     print("Table Looks like: ")
     print(tabulate(rows, headers=cursor.column_names, tablefmt="grid"))
 
+
 def choose_table(cursor):
-    
+
     cursor.execute("SHOW TABLES;")
     print_table(cursor)
 
     while True:
         try:
-            table = input("What table would you like to insert data into: ")
+            table = input("What table you like to use: ")
             cursor.execute(f"SELECT * FROM {table}")
             return table
         except Exception as e:
