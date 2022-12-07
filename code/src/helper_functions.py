@@ -25,5 +25,6 @@ def choose_table(cursor):
             cursor.execute(f"SELECT * FROM {table}")
             return table
         except Exception as e:
-            print("Error Fetching Table")
             print(e)
+            print("Error Fetching Table")
+            break

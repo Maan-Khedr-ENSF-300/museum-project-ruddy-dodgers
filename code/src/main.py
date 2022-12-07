@@ -56,7 +56,6 @@ def main():
                 cnx = db_connector(username, password)
                 cursor = cnx.cursor()
 
-
                 if  selection == '1':
                     loop = admin_main_menu(cnx, cursor)
                 elif selection == '2':
