@@ -44,6 +44,10 @@ pip install tabulate
 - Created Database (Museum_Script)
   - Different Users
   - All Tables (Including referential Keys)
+- Main Python Application
+  - Files and Functionality for Each User
+  - Unit Testing
+  - Error handling and function completion
 
 ### Tavish (UCID: 30144899)
 - Worked on Database(Museum_Script)
