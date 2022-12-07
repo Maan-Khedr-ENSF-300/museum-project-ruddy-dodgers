@@ -1,0 +1,5 @@
+USE MUSEUMART;
+
+SELECT * 
+FROM PAINTING AS P, ART_OBJECT AS A 
+WHERE A.unique_id = P.unique_id

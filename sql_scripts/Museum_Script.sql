@@ -216,10 +216,10 @@ CREATE TABLE EXHIBITS (
 DROP ROLE IF EXISTS 'db_admin'@'localhost', 'write_access'@'localhost', 'read_access'@'localhost';
 CREATE ROLE 'db_admin'@'localhost', 'write_access'@'localhost', 'read_access'@'localhost';
 
- GRANT ALL PRIVILEGES ON *.* TO 'db_admin'@'localhost' WITH GRANT OPTION;
- GRANT Insert ON MUSEUMART.* TO 'write_access'@'localhost';
- GRANT UPDATE ON MUSEUMART.* TO 'write_access'@'localhost';
- GRANT Select ON MUSEUMART.* TO 'read_access'@'localhost';
+GRANT ALL PRIVILEGES ON *.* TO 'db_admin'@'localhost' WITH GRANT OPTION;
+GRANT Insert ON MUSEUMART.* TO 'write_access'@'localhost';
+GRANT UPDATE ON MUSEUMART.* TO 'write_access'@'localhost';
+GRANT Select ON MUSEUMART.* TO 'read_access'@'localhost';
 
 DROP USER IF EXISTS 'admin'@'localhost';
 DROP USER IF EXISTS 'data_entry'@'localhost';
@@ -240,3 +240,4 @@ SET DEFAULT ROLE ALL TO 'admin'@'localhost';
 SET DEFAULT ROLE ALL TO 'data_entry'@'localhost';
 SET DEFAULT ROLE ALL TO 'guest'@'localhost';
 
+FLUSH PRIVILEGES;

@@ -31,6 +31,48 @@ def browsing_main_menu(cursor):
             print("Invalid Input. Please try again.")
 
 
+def art_menu(cursor):
+    # TODO - Provide information on whether the art_object is part of a permanent collection or it is borrowed
+    # TODO - Provide information on the artist and background of the art_object (potentially create a custom print statement)
+
+    iteration = 0
+    browsing = True
+    while browsing:
+        if iteration != 0:
+            browsing = continue_browsing()
+            if not browsing:
+                break
+
+        try:
+            choice = input("What type of Art Pieces would you like to browse:\n1. Paintings\n2.Sculptures/Statues\n3.Other\n0.Back\n")
+
+            if choice == "1":
+                cursor.execute("SELECT * FROM PAINTING AS P, ART_OBJECT AS A WHERE A.unique_id = P.unique_id")
+                print_table(cursor)
+
+            elif choice == "2":
+                cursor.execute("SELECT * FROM SCULPTURE_STATUE AS S, ART_OBJECT AS A WHERE A.unique_id = S.unique_id")
+                print_table(cursor)
+
+            elif choice == "3":
+                cursor.execute("SELECT * FROM OTHER AS O, ART_OBJECT AS A WHERE A.unique_id = O.unique_id")
+                print_table(cursor)
+
+            elif choice == '4':
+                cursor.execute("SELECT * FROM COLLECTIONS WHERE ART_OBJECT.unique_id = COLLECTIONS.unique_id")
+
+            elif choice == "0":
+                return
+
+            else:
+                print("Invalid Input. Please try again.")
+
+        except Exception as e:
+            print("\nThere was an error, please try again")
+            print(e)
+
+        iteration += 1
+
 def exhibition_menu(cursor):
     iteration = 0
     browsing = True
@@ -42,8 +84,10 @@ def exhibition_menu(cursor):
         try:
             cursor.execute("SELECT Ename FROM EXHIBITIONS")
             print_table(cursor)
-            exhibition_name = input("Please Enter the name of the exhibition you would like to view")
+            exhibition_name = input("Please Enter the name of the exhibition you would like to view:\n")
+
             cursor.execute(f"SELECT * FROM EXHIBITIONS WHERE Ename = '{exhibition_name}'")
+            print_table(cursor)
 
         except Exception as e:
             print("Error Displaying Exhibitions")
@@ -76,7 +120,7 @@ def artist_menu(cursor):
 
 
 def collection_menu(cursor):
-    # TODO - CHANGE WHAT DATA IS DISPLAYED?
+    
 
     iteration = 0
     browsing = True
@@ -86,13 +130,11 @@ def collection_menu(cursor):
             if not browsing:
                 break
         try:
-            cursor.execute("SELECT Cname FROM COLLECTIONs")
+            cursor.execute("SELECT Cname FROM COLLECTIONS")
             print_table(cursor)
-            collection_name = input(
-                "Please enter the name of the collection you would like to browse: ")
+            collection_name = input("Please enter the name of the collection you would like to browse: ")
 
-            cursor.execute(
-                f"SELECT * FROM COLLECTIONs WHERE Cname = '{collection_name}'")
+            cursor.execute(f"SELECT * FROM COLLECTIONs WHERE Cname = '{collection_name}'")
             print_table(cursor)
 
         except Exception as e:
@@ -102,48 +144,7 @@ def collection_menu(cursor):
         iteration += 1
 
 
-def art_menu(cursor):
-    # TODO - Provide information on whether the art_object is part of a permanent collection or it is borrowed
-    # TODO - Provide information on the artist and background of the art_object (potentially create a custom print statement)
 
-    iteration = 0
-    browsing = True
-    while browsing:
-        if iteration != 0:
-            browsing = continue_browsing()
-            if not browsing:
-                break
-
-        try:
-            choice = input(
-                "What type of Art Pieces would you like to browse:\n1. Paintings\n2.Sculptures/Statues\n3.Other\n0.Back\n")
-
-            if choice == "1":
-                cursor.execute(
-                    "SELECT * FROM PAINTING AS P, ART_OBJECT AS A WHERE A.unique_id = P.unique_id")
-                print_table(cursor)
-
-            elif choice == "2":
-                cursor.execute(
-                    "SELECT * FROM SCULPTURE_STATUE AS S, ART_OBJECT AS A WHERE A.unique_id = S.unique_id")
-                print_table(cursor)
-
-            elif choice == "3":
-                cursor.execute(
-                    "SELECT * FROM OTHER AS O, ART_OBJECT AS A WHERE A.unique_id = O.unique_id")
-                print_table(cursor)
-
-            elif choice == "0":
-                return
-
-            else:
-                print("Invalid Input. Please try again.")
-
-        except Exception as e:
-            print("\nThere was an error, please try again")
-            print(e)
-
-        iteration += 1
 
 def continue_browsing():
 

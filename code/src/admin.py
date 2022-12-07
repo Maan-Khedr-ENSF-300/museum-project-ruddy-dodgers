@@ -13,9 +13,8 @@ def admin_main_menu(cnx, cursor):
             cnx.commit()
 
         elif choice == '2':
-            init_database(cursor)
+            execute_script(cursor)
             cnx.commit()
-        
 
         elif choice == '3':
             modify_user(cnx, cursor)
@@ -33,12 +32,11 @@ def admin_main_menu(cnx, cursor):
             print("Invalid Input. Please try again.")
 
 
-def init_database(cursor):
+def execute_script(cursor):
     i = 0
     working = False
     while not working:
-        file_name = input(
-            "Enter the path to the file (enter q to exit menu): ")
+        file_name = input("Enter the path to the file (enter q to exit menu): ")
         if file_name == 'q':
             return
 
@@ -60,7 +58,8 @@ def init_database(cursor):
             i += 1
 
     print(f"Executed with {i} errors.")
-
+    print_table(cursor)
+ 
 
 def modify_user(cnx, cursor):
 
@@ -124,6 +123,7 @@ def modify_user(cnx, cursor):
         except Exception as e:
                 print("Error Managing Users")
                 print(e)
+                break
 
 def query(cursor):
     """Goes through and asks for user inputs to 
