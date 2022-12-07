@@ -5,6 +5,23 @@ FROM
 WHERE
     table_schema = 'MUSEUMART';
 
+-- show primary keys
+select t.table_name, s.column_name
+from information_schema.tables as t join information_schema.statistics as s 
+    on s.table_schema = t.table_schema and s.table_name = t.table_name 
+where t.table_schema = 'MUSEUMART' and s.index_name = 'PRIMARY';
+
+
+-- show triggers
+select *
+from information_schema.triggers
+where trigger_schema = 'MUSEUMART';
+
+-- Show keys
+select *
+from information_schema.key_column_usage
+where table_schema = 'MUSEUMART';
+
 
 -- 2) A basic retrieval query
 select *

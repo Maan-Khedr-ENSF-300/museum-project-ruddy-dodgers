@@ -13,8 +13,6 @@ CREATE TABLE ART_OBJECT (
     artist_name     varchar(50) not null,
     in_collection      varchar(30) not null,
 	primary key (Unique_ID)
-
-
 );
 
 
