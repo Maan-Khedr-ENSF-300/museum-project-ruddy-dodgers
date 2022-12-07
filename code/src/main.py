@@ -43,11 +43,9 @@ def main():
                 password = maskpass.askpass(
                     "Please Enter Password: ", mask='*')
             elif selection == '2':
-                # username = input("Username: ")
-                # password = maskpass.askpass(
-                #     "Please Enter Password: ", mask='*')
-                username = 'data_entry'
-                password = 'password'
+                username = input("Username: ")
+                password = maskpass.askpass(
+                    "Please Enter Password: ", mask='*')
             elif selection == '3':
                 username = "guest"
                 password = ''
