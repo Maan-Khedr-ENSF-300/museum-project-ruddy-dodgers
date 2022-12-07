@@ -1,5 +1,7 @@
 -- 1) Show all tables and explain how they are related to one another (keys, triggers, etc.)
-SELECT *
+
+--shows all tables
+SELECT table_schema, table_name
 FROM
     information_schema.tables
 WHERE
@@ -11,14 +13,13 @@ from information_schema.tables as t join information_schema.statistics as s
     on s.table_schema = t.table_schema and s.table_name = t.table_name 
 where t.table_schema = 'MUSEUMART' and s.index_name = 'PRIMARY';
 
-
 -- show triggers
-select *
+SELECT trigger_schema, trigger_name, event_manipulation, event_object_table
 from information_schema.triggers
 where trigger_schema = 'MUSEUMART';
 
--- Show keys
-select *
+-- Show all keys
+SELECT constraint_schema, constraint_name, table_name, column_name, referenced_table_name, referenced_column_name
 from information_schema.key_column_usage
 where table_schema = 'MUSEUMART';
 
@@ -32,7 +33,7 @@ Where Epoch = "Late Medieval"
 
 Select *
 FROM ARTIST
-ORDER BY DAte_Died desc;
+ORDER BY Date_Died desc;
 
 -- 4) A nested retrieval query
 
@@ -59,23 +60,24 @@ WHERE main_style = "jewelry";
 DROP TRIGGER IF EXISTS ARTIST_TRIGGER;
 
 CREATE TRIGGER ARTIST_TRIGGER
-AFTER UPDATE ON ART_OBJECT 
+BEFORE UPDATE ON ART_OBJECT 
 FOR EACH ROW
    UPDATE ARTIST
-   SET ADescription = NEW.artist_name;
-
+   SET aname = NEW.artist_name;
 
 UPDATE ART_OBJECT
 SET artist_name = 'TEST NAME'
 WHERE UNIQUE_ID = '001';
 
-
 -- 7) A deletion operation with any necessary triggers
 
 DROP TRIGGER IF EXISTS ARTIST_D_TRIGGER;
 
-CREATE TRIGGER ARTIST_TRIGGER
-AFTER UPDATE ON ART_OBJECT 
+CREATE TRIGGER ARTIST_D_TRIGGER
+BEFORE DELETE ON ART_OBJECT 
 FOR EACH ROW
-   UPDATE ARTIST
-   SET ADescription = NEW.artist_name;
+DELETE FROM ARTIST
+    WHERE Aname = OLD.artist_name;
+
+DELETE FROM Art_object 
+WHERE UNIQUE_ID = '001';

@@ -8,7 +8,8 @@ from data_entry import *
 
 def db_connector(username, password):
     try:
-        cnx = mysql.connector.connect(user=username, password=password, host='127.0.0.1', database='MUSEUMART')
+        cnx = mysql.connector.connect(
+            user=username, password=password, host='127.0.0.1', database='MUSEUMART')
         print("Connection Successful")
 
         return cnx
@@ -39,10 +40,14 @@ def main():
             if selection == '1':
                 pass
                 username = input("Username: ")
-                password = maskpass.askpass("Please Enter Password: ", mask='*')
+                password = maskpass.askpass(
+                    "Please Enter Password: ", mask='*')
             elif selection == '2':
-                username = input("Username: ")
-                password = maskpass.askpass("Please Enter Password: ", mask='*')
+                # username = input("Username: ")
+                # password = maskpass.askpass(
+                #     "Please Enter Password: ", mask='*')
+                username = 'data_entry'
+                password = 'password'
             elif selection == '3':
                 username = "guest"
                 password = ''
@@ -56,7 +61,7 @@ def main():
                 cnx = db_connector(username, password)
                 cursor = cnx.cursor()
 
-                if  selection == '1':
+                if selection == '1':
                     loop = admin_main_menu(cnx, cursor)
                 elif selection == '2':
                     loop = entry_main_menu(cnx, cursor)
@@ -66,7 +71,6 @@ def main():
             except Exception as e:
                 print("Error")
                 print(e)
-
 
     print("Thank you. Exited Successfully.")
     cnx.commit()

@@ -14,7 +14,8 @@ def entry_main_menu(cnx, cursor):
             if not table_name:
                 continue
             while True:
-                choice2 = input("Would you like to insert data manually or from a file? (M/F): ")
+                choice2 = input(
+                    "Would you like to insert data manually or from a file? (M/F): ")
 
                 if choice2 == 'M':
                     insert_manually(table_name, cursor)
@@ -76,7 +77,8 @@ def change_data(table, cursor):
     num_attributes = len(cursor.description)
     attribute_list = [i[0] for i in cursor.description]
 
-    key_attribute = input("Please enter an column to reference the item you would like to update in the database:\n")
+    key_attribute = input(
+        "Please enter an column to reference the item you would like to update in the database:\n")
     key_attribute_value = input("Please enter a value for the attribute:\n")
     attribute = input("Which column would you like to update:\n")
     data = input("Enter your new value:\n")
@@ -105,20 +107,21 @@ def insert_manually(table, cursor):
 
     num_attributes = len(cursor.description)
     attribute_list = [i[0] for i in cursor.description]
-    
+
     insert_command = f"INSERT INTO {table} ("
     # adds all columns to insert statement
     for i in range(num_attributes-1):
         insert_command += f"{attribute_list[i]}, "
     insert_command += f"{attribute_list[num_attributes-1]})"
-    
-    
+
     # adds each data entry to insert statement
     insert_command += f" VALUES ("
     for i in range(0, num_attributes-1):
-        data = input(f"Enter the info you would like to enter into the '{attribute_list[i]}' column:\n")
+        data = input(
+            f"Enter the info you would like to enter into the '{attribute_list[i]}' column:\n")
         insert_command += f"'{data}', "
-    data = input(f"Enter the info you would like to enter into the '{attribute_list[num_attributes-1]}' column:\n")
+    data = input(
+        f"Enter the info you would like to enter into the '{attribute_list[num_attributes-1]}' column:\n")
     insert_command += f"'{data}')"
 
     # Try to execute statement, print error message if fails
@@ -149,32 +152,46 @@ def get_file_data(table_name, cursor):
 
         try:
             file = open(file_name, 'r')
-            lines = [i.strip().split(' ') for i in file.readlines()]
+            lines = [(i.strip().split(',')) for i in file.readlines()]
+
+            for line in lines:
+                for att in line:
+                    print(att)
+                    att.strip()
 
             if not lines:
                 print("File is empty. Please try again.")
                 return
 
-            for line in lines:
-                for attribute in line:
-                    attribute = f"'{attribute}'"
-
-            cursor.execute(f"SELECT * FROM {table_name}")
-            rows = cursor.fetchall()
             attributes = cursor.column_names
 
             file.close()
             valid = True
 
             atr_str = ', '.join(attributes)
-            value_str1 = ', '.join(list(range(len(lines[0]))))
-            value_str2 = ', '.join([f'({i})' for i in range(len(lines))])
+            print(atr_str)
+
+            value_str1, value_str1 = '', ''
+            i, j = 1, 1
+
+            for line in lines:
+
+                j = 1
+                value_str2 = ''
+                for attribute in line:
+                    value_str2 += f"'{attribute}'" if j == len(
+                        line) else f"'{attribute}', "
+                    j += 1
+
+                value_str1 += f"({value_str2})" if i == len(
+                    lines) else f"({value_str2}), "
+                i += 1
 
             cursor.execute(f"""
             INSERT INTO {table_name} ({atr_str})
             VALUES
-            {value_str2};
+            ({value_str2});
             """)
 
         except Exception as e:
-            print("Error Opening File: ", e)
+            print("Error: ", e)
