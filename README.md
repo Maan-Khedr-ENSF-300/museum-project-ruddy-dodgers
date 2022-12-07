@@ -37,6 +37,8 @@ pip install tabulate
   - Main Software Design (main.py)
   - Files and Functionality for Each User (admin, data_entry, end_user)
   - Helper Functions that assist user functions
+- SQL Queries
+- Helped Create SQL Database (Museum_Script)
 
 ### Nicola
 
