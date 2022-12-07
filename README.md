@@ -40,7 +40,7 @@ pip install tabulate
 - SQL Queries
 - Helped Create SQL Database (Museum_Script)
 
-### Nicola
+### Nicola (UCID: 30129329)
 
 - Relational Schema
 - Created Database (Museum_Script)
